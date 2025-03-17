@@ -1,27 +1,27 @@
-# User Management System - Spring Boot
+# Hotel-Management-App - Spring Boot
 
 ## Introduction
-This is a **User Management System** built with **Spring Boot, JWT Authentication, jQuery, Bootstrap, and DataTables**. The system provides authentication, user registration, and a dashboard to manage users.
+This is a **Hotel Management App** built with **Spring Boot, JWT Authentication, jQuery, Bootstrap, and DataTables**. The system provides authentication, user registration, and a dashboard to manage users.
 
 ## Features
 - **User Registration & Login** (JWT-based authentication)
 - **Secure User Management API** (Get, Delete Users)
 - **Frontend** with **jQuery, Bootstrap, and DataTables**
 - **Swagger API Documentation**
-- **H2 In-Memory Database Support**
 
 ## Requirements
 - **Java 17** or later
 - **Maven**
 - **Spring Boot 3.x**
-- **Postman** (for API testing, optional)
+- **Postman** (for API testing)
 
 ## Installation & Running
 ### 1. Clone the Repository
 ```sh
-git clone <repository-url>
-cd user-management-system
+git clone https://github.com/KaminiNegi/Hotel-Management-App.git
+cd Hotel-Management-App
 ```
+
 
 ### 2. Build & Run the Application
 ```sh
@@ -30,8 +30,7 @@ mvn spring-boot:run
 ```
 
 ### 3. Access API & UI
-- **Swagger UI:** [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
-- **H2 Database Console:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+- **Swagger UI:** http://localhost:9090/swagger-ui/index.html#/
 - **Frontend Dashboard:** Open `index.html` in a browser
 
 ## API Endpoints
@@ -43,7 +42,7 @@ mvn spring-boot:run
 - **Delete User:** `DELETE /api/v1/users/{id}`
 
 ## Database Configuration
-By default, the system uses an **H2 in-memory database**. If using **MySQL/PostgreSQL**, update `application.properties`:
+By default, the system uses  **MySQL**, update `application.properties`:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/user_db
 spring.datasource.username=root
@@ -61,9 +60,7 @@ If expired, use the refresh token to get a new one.
 ## Contributing
 Feel free to contribute by submitting pull requests or opening issues.
 
-## License
-This project is licensed under the **MIT License**.
-
 ---
-### **Author:** your-name
+### **Author:** Kamini Negi
+
 
