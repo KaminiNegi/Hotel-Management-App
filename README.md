@@ -1,7 +1,7 @@
 # Hotel-Management-App - Spring Boot
 
 ## Introduction
-This is a **Hotel Room Booking System – A Smart Self-Check-in & Checkout Solution**
+This is a **Hotel Management System – A Smart Self-Check-in & Checkout Solution**
 
 The Hotel Room Booking System is a web-based application designed to streamline the hotel check-in and checkout process while ensuring secure authentication and seamless room management. The system integrates JWT-based authentication and role-based access control, This system is designed to facilitate self-service check-in and checkout, enabling guests to register, log in, book, and unbook rooms directly at the hotel reception at a self-service kiosk by eliminating the need for front desk staff intervention. The system also includes an admin dashboard for user management and activity tracking admin can view the list of all users, can book room, can see the report that how many users registered with date in bar chart form.
 
