@@ -1,27 +1,29 @@
-# User Management System - Spring Boot
+# Hotel-Management-App - Spring Boot
 
 ## Introduction
-This is a **User Management System** built with **Spring Boot, JWT Authentication, jQuery, Bootstrap, and DataTables**. The system provides authentication, user registration, and a dashboard to manage users.
+This is a **Hotel Room Booking System – A Smart Self-Check-in & Checkout Solution**
+The Hotel Room Booking System is a web-based application designed to streamline the hotel check-in and checkout process while ensuring secure authentication and seamless room management. The system integrates JWT-based authentication and role-based access control, This system is designed to facilitate self-service check-in and checkout, enabling guests to register, log in, book, and unbook rooms directly at the hotel reception at a self-service kiosk by eliminating the need for front desk staff intervention. The system also includes an admin dashboard for user management and activity tracking admin can view the list of all users, can book room, can see the report that how many users registered with date in bar chart form.
+This is built with **Spring Boot REST API, JavaScript, jQuery, HTML, CSS, Bootstrap, MYSQL database and DataTables**.
 
 ## Features
 - **User Registration & Login** (JWT-based authentication)
-- **Secure User Management API** (Get, Delete Users)
-- **Frontend** with **jQuery, Bootstrap, and DataTables**
-- **Swagger API Documentation**
-- **H2 In-Memory Database Support**
+- **Secure User Management API** (GET, POST)
+- **Frontend** with **jQuery, Bootstrap, JavaScript, HTML, CSS and DataTables**
+- **Postman collection API Documentation**
 
 ## Requirements
 - **Java 17** or later
 - **Maven**
 - **Spring Boot 3.x**
-- **Postman** (for API testing, optional)
+- **Postman** (for API testing)
 
 ## Installation & Running
 ### 1. Clone the Repository
 ```sh
-git clone <repository-url>
-cd user-management-system
+git clone https://github.com/KaminiNegi/Hotel-Management-App.git
+cd Hotel-Management-App
 ```
+
 
 ### 2. Build & Run the Application
 ```sh
@@ -30,9 +32,12 @@ mvn spring-boot:run
 ```
 
 ### 3. Access API & UI
-- **Swagger UI:** [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
-- **H2 Database Console:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+
+- **Postman collection API documentation:** (https://documenter.getpostman.com/view/40824632/2sAYkDLziJ)
 - **Frontend Dashboard:** Open `index.html` in a browser
+- **Admin credentials:**
+- Email - admin@gmail.com 
+- Password - admin
 
 ## API Endpoints
 - **Register User:** `POST /api/v1/auth/register`
@@ -40,10 +45,13 @@ mvn spring-boot:run
 - **Refresh Token:** `POST /api/v1/auth/refresh-token`
 - **Get All Users:** `GET /api/v1/users`
 - **Get User by ID:** `GET /api/v1/users/{id}`
-- **Delete User:** `DELETE /api/v1/users/{id}`
+- **Get All Rooms details:** `GET /api/v1/rooms
+- **Room Book:** `POST /api/v1/rooms/book
+- **Room UnBook:** `POST /api/v1/rooms/unbook
+- **`
 
 ## Database Configuration
-By default, the system uses an **H2 in-memory database**. If using **MySQL/PostgreSQL**, update `application.properties`:
+The system uses  **MySQL**, update `application.properties`:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/user_db
 spring.datasource.username=root
@@ -61,9 +69,6 @@ If expired, use the refresh token to get a new one.
 ## Contributing
 Feel free to contribute by submitting pull requests or opening issues.
 
-## License
-This project is licensed under the **MIT License**.
-
 ---
-### **Author:** your-name
+### **Author:** Kamini Negi
 
