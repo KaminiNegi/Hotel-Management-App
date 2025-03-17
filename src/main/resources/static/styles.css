@@ -1,0 +1,86 @@
+/* Background for authentication screens */
+.auth-container {
+    height: 100vh;
+    background: url('/images/background7.jpg') no-repeat center center/cover;
+}
+
+/* ✅ Fix Booking Section Layout */
+#bookingSection {
+    background: rgba(255, 255, 255, 0.8); /* ✅ Light background */
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #ccc; /* ✅ Subtle border */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* ✅ Soft shadow */
+    margin: 20px auto; /* ✅ Adds spacing */
+    max-width: 80%; /* ✅ Centers and limits width */
+}
+
+/* ✅ Room Card Styling - Reduce Size & Improve Spacing */
+.room-card {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    width: 150px; /* ✅ Smaller room size */
+    height: 100px; /* ✅ More balanced shape */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* ✅ Center text */
+    margin: 15px; /* ✅ Add spacing between rooms */
+}
+
+/* ✅ Improve Room Layout */
+#roomContainer {
+    display: flex;
+    flex-wrap: wrap; /* ✅ Ensure wrapping */
+    gap: 20px; /* ✅ More spacing between rows */
+    justify-content: center; /* ✅ Align center */
+    max-width: 80%; /* ✅ Adjusted width */
+    margin: auto;
+}
+
+/* ✅ Make Buttons Smaller */
+.room-card button {
+    width: 80px;
+    font-size: 14px;
+    padding: 5px;
+}
+
+/* ✅ Prevent Dashboard Stretching & Scrolling */
+#dashboardSection {
+    width: 100%;
+    max-width: 1100px; /* ✅ Prevent excessive stretching */
+    margin: auto;
+}
+
+/* ✅ Prevent Table from Overflowing */
+#userTable {
+    width: 100%;  /* ✅ Full width but responsive */
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* ✅ Adjust Chart Section */
+#userChart {
+    width: 100% !important; /* ✅ Expand full width */
+    max-width: 600px; /* ✅ Adjust max width */
+    margin: auto; /* ✅ Center the chart */
+}
+
+/* ✅ Make Cards More Responsive */
+.card {
+    width: 90%;
+    padding: 20px;
+    margin: auto;
+}
+
+/* Logout Button */
+#logoutBtn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+

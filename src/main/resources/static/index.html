@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="/styles.css">
+</head>
+<body class="auth-container">
+<div class="container mt-5">
+    <div id="authSection">
+        <div id="loginSection" class="text-center">
+            <h2 class="text-center">Login</h2>
+            <form id="loginForm">
+                <input type="email" id="email" class="form-control w-50 mx-auto mb-2" placeholder="Email" required>
+                <input type="password" id="password" class="form-control w-50 mx-auto mb-2" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary w-50">Login</button>
+            </form>
+            <p class="text-center mt-2">Don't have an account? <a href="#" id="showRegister">Register</a></p>
+        </div>
+    </div>
+    <div id="bookingSection" class="mt-4" style="display: none;">
+        <h4>Hotel Room Booking</h4>
+        <div class="row justify-content-center" id="roomContainer"></div>
+    </div>
+
+    <div id="registerSection" style="display: none;">
+            <h2 class="text-center">Register</h2>
+            <form id="registerForm">
+                <input type="text" id="firstname" class="form-control w-50 mx-auto mb-2" placeholder="First Name" required>
+                <input type="text" id="lastname" class="form-control w-50 mx-auto mb-2" placeholder="Last Name" required>
+                <input type="email" id="regEmail" class="form-control w-50 mx-auto mb-2" placeholder="Email" required>
+                <input type="password" id="regPassword" class="form-control w-50 mx-auto mb-2" placeholder="Password" required>
+
+                <button type="submit" class="btn btn-success w-50 d-block mx-auto">Register</button>
+
+            </form>
+            <p class="text-center mt-2">Already have an account? <a href="#" id="showLogin">Login</a></p>
+        </div>
+    </div>
+
+    <div id="dashboardSection" style="display: none;">
+        <button class="btn btn-danger float-end" id="logoutBtn" style="position: absolute; top: 10px; right: 10px;">Logout</button>
+        <h2>Welcome to the Dashboard</h2>
+        <div class="card p-3">
+            <h4>User List</h4>
+            <table class="table table-striped" id="userTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="card p-3 mt-3">
+            <h4>Users Registered Per Day</h4>
+            <canvas id="userChart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+$(document).ready(function() {
+   function checkAuth() {
+    let token = localStorage.getItem("token");
+    if (token) {
+        $("#authSection").hide();
+        $("#dashboardSection").show();
+        $("#bookingSection").show();  // ✅ Show Hotel Booking only when logged in
+        fetchUsers();
+        fetchRooms();
+    } else {
+        $("#authSection").show();
+        $("#dashboardSection").hide();
+        $("#bookingSection").hide();  // ❌ Hide Hotel Booking when logged out
+    }
+}
+
+
+    $("#showRegister").click(function() { $("#loginSection").hide(); $("#registerSection").show(); });
+    $("#showLogin").click(function() { $("#registerSection").hide(); $("#loginSection").show(); });
+
+  $("#loginForm").submit(function(event) {
+    event.preventDefault();
+
+    let email = $("#email").val();
+    let password = $("#password").val();
+
+    $.ajax({
+        url: "http://localhost:9090/api/v1/auth/authenticate",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ email, password }),
+        success: function(response) {
+            localStorage.setItem("token", response.access_token);
+            localStorage.setItem("userId",response.userId);
+            checkAuth();
+        },
+        error: function(xhr) {
+            alert("Invalid credentials or server error.");
+            console.error("Error:", xhr);
+        }
+    });
+});
+
+  $("#registerForm").submit(function(event) {
+    event.preventDefault();
+
+    let data = {
+        firstname: $("#firstname").val(),
+        lastname: $("#lastname").val(),
+        email: $("#regEmail").val(),
+        password: $("#regPassword").val()
+    };
+
+    $.ajax({
+        url: "http://localhost:9090/api/v1/auth/register",
+        type: "POST",
+        contentType: "application/json",  // ✅ Ensure raw JSON is sent
+        data: JSON.stringify(data),  // ✅ Convert to JSON string
+        success: function() {
+            alert("Registration successful!");
+            checkAuth();
+        },
+        error: function() {
+            alert("Registration failed");
+        }
+    });
+});
+
+
+    $("#logoutBtn").click(function() {
+        localStorage.removeItem("token");
+        checkAuth();
+    });
+
+    function fetchUsers() {
+        $.ajax({
+            url: "http://localhost:9090/api/v1/users",
+            headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+            success: function(response) {
+                let tableBody = $("#userTable tbody");
+                tableBody.empty();
+                let userCountByDate = {};
+                response.forEach(user => {
+                    let createdDate = user.createdAt.split('T')[0];
+                    let roleBadge = user.rolesString.includes("ADMIN") ? "Admin" : "User";
+                    tableBody.append(`<tr><td>${user.id}</td><td>${user.firstname}</td><td>${user.lastname}</td><td>${user.email}</td><td>${createdDate}</td><td>${roleBadge}</td></tr>`);
+                    userCountByDate[createdDate] = (userCountByDate[createdDate] || 0) + 1;
+                });
+                if (!$.fn.DataTable.isDataTable("#userTable")) $("#userTable").DataTable();
+                renderChart(userCountByDate);
+            }
+        });
+    }
+
+   function renderChart(userCountByDate) {
+    let ctx = document.getElementById("userChart").getContext("2d");
+
+    // Clear existing chart instance if present
+    if (window.userChart instanceof Chart) {
+        window.userChart.destroy();
+    }
+
+    window.userChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(userCountByDate), // Dates on x-axis
+            datasets: [{
+                label: 'Users Created',
+                data: Object.values(userCountByDate), // User counts on y-axis
+                backgroundColor: '#007bff',
+                borderColor: '#000',
+                borderWidth: 1,
+                barThickness: 30,
+                categoryPercentage: 0.6,
+                barPercentage: 0.9
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: { display: true, text: 'Date' },
+                    ticks: { autoSkip: false }
+                },
+                y: {
+                    title: { display: true, text: 'Number of Users' },
+                    beginAtZero: true,
+                    ticks: { stepSize: 1, precision: 0 }
+                }
+            },
+            plugins: { legend: { display: true } }
+        }
+    });
+}
+
+checkAuth();
+
+});
+</script>
+<script>
+   function fetchRooms() {
+    let userId = localStorage.getItem("userId"); // Get user ID from local storage
+
+    $.ajax({
+        url: "http://localhost:9090/api/v1/rooms",
+        headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+        success: function(response) {
+            let roomContainer = $("#roomContainer");
+            roomContainer.empty(); // ✅ Clear the container before appending new data
+
+            response.forEach(room => {
+                let isBooked = room.booked;
+                let isBookedByUser = room.bookedBy == userId;
+
+                let statusClass = isBooked ? "bg-danger" : "bg-success"; // ✅ Green = Available, Red = Booked
+                let buttonLabel = isBooked ? "Unbook" : "Book";
+
+                // ✅ Make "Unbook" clickable only for the user who booked it
+                let buttonDisabled = isBooked && !isBookedByUser ? "disabled" : "";
+
+                // ✅ Correct action for book/unbook
+                let action = isBooked ? "unbook" : "book";
+
+                roomContainer.append(`
+                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center">
+                         <div class="card text-white ${statusClass} mb-3 room-card">
+                            <div class="card-header">Room ${room.roomNumber}</div>
+                            <div class="card-body">
+                                <button class="btn btn-light book-btn"
+                                        data-id="${room.id}"
+                                        data-action="${action}"
+                                        ${buttonDisabled}>
+                                    ${buttonLabel}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        },
+        error: function(xhr) {
+            alert("Error fetching rooms: " + xhr.responseText);
+        }
+    });
+}
+
+
+
+  $(document).on("click", ".book-btn", function() {
+    let roomId = $(this).data("id");
+    let action = $(this).data("action"); // ✅ Now correctly reads "book" or "unbook"
+    let token = localStorage.getItem("token");
+    let userId = localStorage.getItem("userId");
+
+    if (!token) {
+        alert("Please log in first!");
+        return;
+    }
+
+    if (!roomId || !action) {
+        alert("Room ID or action is missing!");
+        return;
+    }
+
+    $.ajax({
+        url: `http://localhost:9090/api/v1/rooms/${action}`,
+        headers: { "Authorization": "Bearer " + token },
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ roomId, userId }),
+        success: function() {
+            fetchRooms(); // Refresh the room list after booking/unbooking
+        },
+        error: function(xhr) {
+            alert(xhr.responseText);
+        }
+    });
+});
+
+
+
+    // Fetch rooms when the dashboard loads
+    function checkAuth() {
+        let token = localStorage.getItem("token");
+        if (token) {
+            fetchRooms();
+        }
+    }
+
+    checkAuth();
+</script>
+
+
+</body>
+</html>
