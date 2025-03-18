@@ -1,3 +1,4 @@
+
 # Hotel-Management-App - Spring Boot
 
 ## Introduction
@@ -75,4 +76,5 @@ Feel free to contribute by submitting pull requests or opening issues.
 
 ---
 ### **Author:** Kamini Negi
+
 
