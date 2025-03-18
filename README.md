@@ -36,10 +36,12 @@ mvn spring-boot:run
 ### 3. Access API & UI
 
 - **Postman collection API documentation:** (https://documenter.getpostman.com/view/40824632/2sAYkDLziJ)
-- **Frontend Dashboard:** Open `index.html` in a browser
+- **Frontend Dashboard:** Open `index.html` in a browser (http://localhost:9090/index.html#)
 - **Admin credentials:**
 - Email - admin@gmail.com 
 - Password - admin
+- User credential - 
+
 
 ## API Endpoints
 - **Register User:** `POST /api/v1/auth/register`
@@ -55,7 +57,7 @@ mvn spring-boot:run
 ## Database Configuration
 The system uses  **MySQL**, update `application.properties`:
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/user_db
+spring.datasource.url=jdbc:mysql://localhost:3306/spring_boots?createDatabaseIfNotExist=true
 spring.datasource.username=root
 spring.datasource.password=yourpassword
 spring.jpa.hibernate.ddl-auto=update
