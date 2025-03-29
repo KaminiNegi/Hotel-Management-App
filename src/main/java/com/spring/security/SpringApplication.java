@@ -8,12 +8,10 @@ import com.spring.security.users.RoleType;
 import com.spring.security.users.User;
 import com.spring.security.users.UserRepository;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -66,24 +64,5 @@ public class SpringApplication implements CommandLineRunner {
 		}
 	}
 
-	/*@PostConstruct  // Runs after Spring initializes the beans
-	@Transactional
-	public void initializeData() {
-		if (!userRepository.existsByEmail("admin@gmail.com")) {
-			Role adminRole = roleRepository.findByName(RoleType.ADMIN)
-					.orElseThrow(() -> new RuntimeException("Default ADMIN role not found"));
-
-			var user = User.builder()
-					.firstname("admin")
-					.lastname("admin")
-					.email("admin@gmail.com")
-					.password(passwordEncoder.encode("admin"))
-					.roles(Set.of(adminRole))
-					.createdAt(new Date())
-					.build();
-			userRepository.save(user);
-		}
-
-		System.out.println("Initialization completed.");
-	}*/
+	
 }

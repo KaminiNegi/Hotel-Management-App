@@ -32,18 +32,6 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-//    @GetMapping
-//    public ResponseEntity<List<EntityModel<User>>> getAllUsers() {
-//
-//        List<EntityModel<User>> users = userRepository.findAll().stream()
-//                .map(user -> EntityModel.of(user,
-//                        linkTo(methodOn(UserController.class).getUserById(user.getId())).withSelfRel(),
-//                        linkTo(methodOn(UserController.class).getAllUsers()).withRel("all-users")
-//                ))
-//                .collect(Collectors.toList());
-//
-//        return ResponseEntity.ok(users);
-//    }
 
     @GetMapping
     @Transactional
@@ -55,7 +43,7 @@ public class UserController {
         }
         User currentUser = optionalUser.get();
         boolean isAdmin = currentUser.getRoles().stream()
-                .anyMatch(role -> "ADMIN".equalsIgnoreCase(role.getName().name())); // Check if user has ADMIN role
+                .anyMatch(role -> "ADMIN".equalsIgnoreCase(role.getName().name()));
 
         List<User> users= new ArrayList<>() ;
         if(isAdmin) {
@@ -64,14 +52,14 @@ public class UserController {
         else {
             users = List.of(currentUser);
         }
-        // Force Hibernate to initialize roles for each user
+
         users.forEach(user -> Hibernate.initialize(user.getRoles()));
 
         List<EntityModel<User>> userModels = users.stream()
                 .peek(user -> {
-                    // Convert roles to a comma-separated string
+       
                     String rolesString = user.getRoles().stream()
-                            .map(role -> role.getName().name()) // Explicit lambda for clarity
+                            .map(role -> role.getName().name()) 
                             .collect(Collectors.joining(", "));
 
                     user.setRolesString(rolesString);
