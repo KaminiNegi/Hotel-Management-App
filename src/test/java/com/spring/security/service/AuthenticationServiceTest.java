@@ -9,9 +9,6 @@ import com.spring.security.token.Token;
 import com.spring.security.token.TokenRepository;
 import com.spring.security.users.*;
 
-import io.jsonwebtoken.io.IOException;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.WriteListener;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -22,16 +19,14 @@ import org.mockito.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import java.io.ByteArrayOutputStream;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
-public class AuthenticationServiceTest {
+ class AuthenticationServiceTest {
 
     @InjectMocks
     private AuthenticationService service;
