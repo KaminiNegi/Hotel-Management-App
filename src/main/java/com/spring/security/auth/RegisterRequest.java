@@ -1,6 +1,5 @@
 package com.spring.security.auth;
 
-import com.spring.security.users.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
