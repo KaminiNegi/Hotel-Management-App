@@ -2,13 +2,13 @@ package com.spring.security.karate.integration;
 
 import com.intuit.karate.junit5.Karate;
 
-public class BookAndUnbookRoomIntegrationTest {
+public class LoginAndGetUserDetailIT {
 
 
         @Karate.Test
 
         Karate testLogin() {
-            return Karate.run("classpath:karate/feature/bookandunbook.feature").relativeTo(getClass());
+            return Karate.run("classpath:karate/feature/login.feature").relativeTo(getClass());
         }
 
 

@@ -1,7 +1,7 @@
 package com.spring.security.karate.integration;
 
 import com.intuit.karate.junit5.Karate;
-public class RegistrationAndLoginIntegrationTest {
+public class RegistrationAndLoginIntegrationIT {
 
 
         @Karate.Test
