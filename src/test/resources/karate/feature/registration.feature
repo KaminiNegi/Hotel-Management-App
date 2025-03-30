@@ -3,7 +3,8 @@ Feature: User Registration API Test
   Background:
     * url 'http://localhost:9090/api/v1/auth'
     * header Content-Type = 'application/json'
-    * def email = 'user' + Math.floor(Math.random() * 10000) + '@gmail.com'
+    * def uuid = java.util.UUID.randomUUID().toString()
+   * def email = 'user_' + uuid + '@gmail.com'
     * def password = 'Test@1234'
 
   Scenario: Register a New User with random email
