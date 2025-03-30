@@ -13,7 +13,7 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.List;
 
-public class TestHotelAppTest {
+public class TestHotelApp {
 
     public WebDriver driver;
 
