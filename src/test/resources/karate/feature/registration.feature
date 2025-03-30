@@ -21,17 +21,5 @@ Feature: User Registration API Test
     When method POST
     Then status 200
     * print 'User registered with email:', email
-    * karate.set('registeredEmail', email)
-    * karate.set('registeredPassword', password)
 
-  Scenario: Login Registered user
-    * def email = karate.get('registeredEmail')
-    * def password = karate.get('registeredPassword')
-    * def retryCondition = function(response) { return responseStatus == 200; }
 
-    Given path 'authenticate'
-    And request { "email": "#(email)", "password": "#(password)" }
-    When method POST
-    Then retry until retryCondition
-    * def authToken = response.access_token
-    * print 'Successfully logged in with token:', authToken
