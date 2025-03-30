@@ -240,6 +240,14 @@
                     <csv enabled="false"/>
                     <html enabled="true"/>
                 </reports>
+                <!-- ✅ Focused Coverage Filter -->
+        <includes>
+          <include>**/auth/AuthenticationService.class</include>
+          <include>**/auth/AuthenticationController.class</include>
+          <include>**/booking/RoomService.class</include>
+
+        </includes>
+                
             </configuration>
         </execution>
     </executions>
