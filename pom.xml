@@ -15,6 +15,7 @@
 	<description>Hotel Management App</description>
 	<properties>
 		<java.version>17</java.version>
+		<argLine></argLine>
 	</properties>
 	<dependencies>
 
@@ -185,7 +186,7 @@
 			<artifactId>maven-surefire-plugin</artifactId>
 			<version>3.0.0-M9</version> <!-- Safe, recent version -->
 			<configuration>
-				<argLine>-Dnet.bytebuddy.experimental=true</argLine>
+				<argLine>@{argLine} -Dnet.bytebuddy.experimental=true</argLine>
 			</configuration>
 		</plugin>
 		
@@ -221,6 +222,9 @@
             <goals>
                 <goal>prepare-agent</goal>
             </goals>
+            <configuration>
+                <propertyName>argLine</propertyName>
+            </configuration>
         </execution>
         <execution>
              <id>report</id>
@@ -258,6 +262,7 @@
  
   </configuration>
 </plugin>
+
 
 <plugin>
       <groupId>org.sonarsource.scanner.maven</groupId>
