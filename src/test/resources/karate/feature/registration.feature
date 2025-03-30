@@ -4,7 +4,7 @@ Feature: User Registration API Test
     * url 'http://localhost:9090/api/v1/auth'
     * header Content-Type = 'application/json'
     * def uuid = java.util.UUID.randomUUID().toString()
-   * def email = 'user_' + uuid + '@gmail.com'
+    * def email = 'user_' + uuid + '@gmail.com'
     * def password = 'Test@1234'
 
   Scenario: Register a New User with random email
@@ -21,9 +21,12 @@ Feature: User Registration API Test
     When method POST
     Then status 200
     * print 'User registered with email:', email
-
+    * karate.set('registeredEmail', email)
+    * karate.set('registeredPassword', password)
 
   Scenario: Login Registered user
+    * def email = karate.get('registeredEmail')
+    * def password = karate.get('registeredPassword')
     * def retryCondition = function(response) { return responseStatus == 200; }
 
     Given path 'authenticate'
