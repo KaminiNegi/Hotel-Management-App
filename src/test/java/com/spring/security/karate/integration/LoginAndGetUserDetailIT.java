@@ -8,7 +8,11 @@ public class LoginAndGetUserDetailIT {
         @Karate.Test
 
         Karate testLogin() {
-            return Karate.run("classpath:karate/feature/login.feature").relativeTo(getClass());
+            return Karate.run( 
+            		
+            	"classpath:karate/feature/login.feature"
+             )
+            		.relativeTo(getClass());
         }
 
 
