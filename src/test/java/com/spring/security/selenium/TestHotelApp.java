@@ -27,7 +27,7 @@ public class TestHotelApp {
     	System.setProperty("webdriver.chrome.driver", "/Users/kamininegi/Desktop/Project CI CD/Hotel-Management-App-main/src/main/resources/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
-      //  options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
+        options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
 
         options.addArguments("--disable-web-security");
