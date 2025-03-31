@@ -245,7 +245,6 @@
           <include>**/auth/AuthenticationService.class</include>
           <include>**/auth/AuthenticationController.class</include>
           <include>**/booking/RoomService.class</include>
-          <include>**/security/SpringApplication.java</include>
           <include>**/booking/RoomController.class</include>
           <include>**/booking/RoomRepository.class</include>
          <!-- 
