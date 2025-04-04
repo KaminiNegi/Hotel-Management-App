@@ -74,7 +74,6 @@ If expired, use the refresh token to get a new one.
 ## Contributing
 Feel free to contribute by submitting pull requests or opening issues.
 
----
 ### **Author:** Kamini Negi
 
 
